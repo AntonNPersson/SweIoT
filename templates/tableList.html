@@ -1,0 +1,148 @@
+<style>
+    div {
+      margin-bottom: 5px;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+    
+    thead {
+      display: table-header-group;
+      background-color: #ddd;
+      font-weight: bold;
+    }
+    
+    tbody {
+      display: table-row-group;
+    }
+    
+    tr {
+      width: 100%;
+      height: 100%;
+    }
+    
+    td, th {
+      width: 25%;
+      flex: 1;
+      text-align: center;
+      padding: 0.5em;
+      border: 1px solid black;
+    }
+  
+    #itemList {
+      max-height: 50%;
+      overflow-y: auto;
+      max-width: 60%;
+      overflow-x: auto;
+    }
+  
+    #backButton {
+      position: absolute;
+      left: 40%;
+    }
+
+    #errorDiv {
+     position: absolute;
+     top: 15%;
+     right: 10%;
+     display: inline-block;
+     margin-left: 10px;
+     color: rgb(0, 0, 0);
+     outline: auto;
+     outline-width: 3px;
+     outline-color: black;
+    }
+
+    #uploadDiv {
+     position: absolute;
+     right: 10%;
+     display: inline-block;
+     margin-left: 10px;
+     color: rgb(0, 0, 0);
+     outline: auto;
+     outline-width: 3px;
+     outline-color: black;
+    }
+  </style>
+  
+  <button onclick="window.location.href = '/administrator/tools/index'", id="backButton">Back</button>
+  
+  <div>
+    <label for="searchColumn">Search in:</label>
+    <select id="searchColumn" name="searchColumn">
+      {% for column in columns %}
+        <option value="{{ column }}">{{ column|title }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div>
+    <label for="searchInput">Search:</label>
+    <input type="text" onkeyup="filterList()" id="searchInput" name="searchInput">
+  </div>
+
+  <div id="errorDiv">
+  <form method="POST" action="/administrator/all/{{ orders.__table__.name.replace('public.', '') }}/all/tools/manager">
+    {% for column in orders.__table__.columns %}
+      <label for="{{ column.name }}">{{ column.name }}:</label>
+      <input type="text" required name="{{ column.name }}" id="{{ column.name }}"><br>
+    {% endfor %}
+    <button type="submit" id="addButton">Submit</button>
+  </form>
+  </div>
+
+  <div id="uploadDiv">
+    <form method="POST" action="/administrator/tools/csv" enctype="multipart/form-data">
+      <input type="file" name="csvFile">
+      <input type="hidden" name="tableName" value="{{ orders.__table__.name.replace('public.', '') }}">
+      <button type="submit", id="uploadButton">Submit</button>
+    </form>
+  </div>
+
+  <table id="itemList">
+    <thead>
+      <tr>
+        {% for column in orders.__table__.columns %}
+          <th>{{ column.name }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      {% for item in items %}
+        <tr>
+          {% for column in orders.__table__.columns %}
+            <td data-column="{{ column.name }}">{{ item[column.name] }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  
+  <script>
+  function filterList() {
+      var input, filter, table, tr, td, i, j, text;
+      input = document.getElementById("searchInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("itemList");
+      tr = table.getElementsByTagName("tr");
+      var searchColumn = document.getElementById("searchColumn");
+      var queryText = input.value.toUpperCase();
+      for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td");
+          for (j = 0; j < td.length; j++) {
+              if (td[j].getAttribute("data-column") == searchColumn.value) {
+                  text = td[j].textContent.toUpperCase();
+                  if (text.indexOf(queryText) > -1) {
+                      tr[i].style.display = "";
+                      break;
+                  } else {
+                      tr[i].style.display = "none";
+                  }
+              }
+          }
+      }
+  }
+  </script>
+  
+  
