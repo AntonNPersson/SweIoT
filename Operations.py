@@ -2,8 +2,10 @@ import DatabaseLayer
 import Cryptography
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy import func, Sequence
+import logging
 dl = DatabaseLayer
 cry = Cryptography
+logging.getLogger('sqlalchemy').setLevel(logging.WARNING)
 
 def executeQuery(query_func, *args, **kwargs):
     # Get a database session and the SQLAlchemy Base object
@@ -34,7 +36,7 @@ def GetSpecificFromColumnInTable(value, column, table):
         theTable = GetAllOfColumnFromTable(table, column)
         # Check if an error occurred during retrieval
         if(theTable == False):
-            return theTable
+            return 'Error: No table exist with provided values'
         # If no error, query the row that matches the provided value
         else:
             return theTable.query.filter_by(value).first()

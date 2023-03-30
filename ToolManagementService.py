@@ -45,43 +45,43 @@ def GetList(name):
 
 
 # App routes
-@https.route(deviceName, methods=['GET', 'POST'])
+@https.route(deviceName, methods=['GET'])
 def DeviceList():
     return GetList('devices')
 
-@https.route(batchName, methods=['GET', 'POST'])
+@https.route(batchName, methods=['GET'])
 def BatchList():
     return GetList('batch')   
 
-@https.route(customerName, methods=['GET', 'POST'])
+@https.route(customerName, methods=['GET'])
 def CustomerList():
     return GetList('customers') 
 
-@https.route(firmwareName, methods=['GET', 'POST'])
+@https.route(firmwareName, methods=['GET'])
 def FirmwareList():
     return GetList('firmwares') 
 
-@https.route(configName, methods=['GET', 'POST'])
+@https.route(configName, methods=['GET'])
 def ConfigList():
     return GetList('config') 
 
-@https.route(keysName, methods=['GET', 'POST'])
+@https.route(keysName, methods=['GET'])
 def KeyList():
     return GetList('rsakeys') 
 
-@https.route(ordersName, methods=['GET', 'POST'])
+@https.route(ordersName, methods=['GET'])
 def OrderList():
     return GetList('orders') 
 
-@https.route(producersName, methods=['GET', 'POST'])
+@https.route(producersName, methods=['GET'])
 def ProducerList():
     return GetList('producers') 
 
-@https.route(roleName, methods=['GET', 'POST'])
+@https.route(roleName, methods=['GET'])
 def RoleList():
     return GetList('role') 
 
-@https.route(usersName, methods=['GET', 'POST'])
+@https.route(usersName, methods=['GET'])
 def UserList():
     return GetList('users') 
 

@@ -19,7 +19,7 @@ def GetModel(table_name):
         raise ValueError(f"Table model not found for table name: {table_name}")
     return table_model
 
-# map models, you need to create session before calling these
+# map models, unessecary
 def Users(Base):
     Users = Base.classes.users
     return Users
