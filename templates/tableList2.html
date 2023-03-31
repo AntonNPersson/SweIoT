@@ -31,6 +31,13 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
+
+            #nametable{
+              font-weight: bolder;
+              position: relative;
+              top: 1%;
+              font-size: 30px;
+            }
             
             /* Style the remove button */
             #remove-button{
@@ -230,7 +237,8 @@
             }
               </style>
               <!--Logo header-->
-              <h1 id="logo">SweIoT</h1>
+              <h1 id="logo">{{orders.__table__.name}}</h1>
+              <hi id="nametable">SweIoT</hi>
 
               <div id="buttonContainer">
                 <button class="toggle-button", id="toggle-button">
